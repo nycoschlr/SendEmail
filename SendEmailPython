@@ -1,0 +1,33 @@
+#Message content from file
+file_txt = open("emailcontent.txt", "r")
+lines = file_txt.read()
+
+
+#Yagmail, do not forget to allow less secure applications to acess gmail.
+
+import yagmail
+yag = yagmail.SMTP("youremail", "yourpassword")
+print("yagmail is setup")
+contents = lines
+print("Contents is charged")
+
+
+def send_email():
+    yag.send(to = "yourreceiveremail", subject = "thesubjectofyouremail", contents = contents)
+
+print("Function is defined")
+print("Email is ready")
+
+
+#To schedule the email
+
+from datetime import datetime
+from apscheduler.schedulers.blocking import BlockingScheduler
+
+
+sched = BlockingScheduler()
+print("Waiting...")
+sched.add_job(send_email, 'interval', hours=1, start_date='2021-02-14 20:33:00', end_date='2021-02-14 20:35:00')
+print("Interval is defined")
+sched.start()
+print("Email has been sent")
